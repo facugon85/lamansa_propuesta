@@ -49,4 +49,25 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  // Efecto ripple en botones principales
+  function addRippleEffect(e) {
+    const btn = e.currentTarget;
+    let ripple = btn.querySelector('.ripple');
+    if (ripple) ripple.remove();
+    ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    btn.appendChild(ripple);
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+    ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+    ripple.classList.add('show');
+    setTimeout(() => ripple.remove(), 500);
+  }
+
+  document.querySelectorAll('.btn, .btn-lg, .btn-accent, .btn-outline-light, .btn-outline-accent').forEach(btn => {
+    btn.addEventListener('click', addRippleEffect);
+  });
 });
